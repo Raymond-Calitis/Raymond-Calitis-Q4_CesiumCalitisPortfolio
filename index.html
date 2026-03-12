@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Q4 1st Graded Exercise">
@@ -10,22 +9,26 @@
     <title>Movie Rating</title>
 
     <style>
-        body {
+        body 
+        {
             font-family: Arial, sans-serif;
             max-width: 500px;
             margin: 30px auto;
             padding: 20px;
         }
-        h1 {
+        h1 
+        {
             font-size: 32px;
             margin-bottom: 30px;
         }
-        label {
+        label 
+        {
             font-weight: bold;
             display: block;
             margin-top: 15px;
         }
-        input, select {
+        input, select 
+        {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
@@ -34,19 +37,38 @@
             font-size: 16px;
             box-sizing: border-box;
         }
-        .stars {
-            font-size: 30px;
-            color: lightgrey;
+        
+        .star-rating-table 
+        {
+            border-collapse: separate;
+            border-spacing: 8px;
             margin: 10px 0;
         }
-        .star {
+        .star-rating-table td 
+        {
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .star-cell 
+        {
             cursor: pointer;
-            display: inline-block;
+            font-size: 30px;
+            color: lightgrey;
+            display: block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
         }
-        .star.selected {
-            color:  gold;
+        .star-cell.selected 
+        {
+            color: rgb(215, 187, 22);
         }
-        button {
+        
+        button 
+        {
             background-color: black;
             color: white;
             padding: 10px 30px;
@@ -56,17 +78,26 @@
             margin: 20px 0;
             cursor: pointer;
         }
-        h2 {
+        h2 
+        {
             font-size: 24px;
             margin: 30px 0 20px 0;
         }
-        .movie-item {
-            padding: 10px 0;
-            border-bottom: 1px solid white;
+        .movie-item 
+        {
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: lightgrey;
         }
-        .movie-stars {
-            color: gold;
-            font-size: 18px;
+        .movie-stars 
+        {
+            color: rgb(215, 187, 22);
+            font-size: 20px;
+            letter-spacing: 2px;
+            margin-left: 5px;
         }
     </style>
 </head>
@@ -89,13 +120,15 @@
     </select>
     
     <label>Rating:</label>
-    <div class="stars" id="stars">
-        <span class="star" data-value="1">★</span>
-        <span class="star" data-value="2">★</span>
-        <span class="star" data-value="3">★</span>
-        <span class="star" data-value="4">★</span>
-        <span class="star" data-value="5">★</span>
-    </div>
+    <table class="star-rating-table" id="starTable">
+        <tr>
+            <td><span class="star-cell" id="star1" data-value="1">★</span></td>
+            <td><span class="star-cell" id="star2" data-value="2">★</span></td>
+            <td><span class="star-cell" id="star3" data-value="3">★</span></td>
+            <td><span class="star-cell" id="star4" data-value="4">★</span></td>
+            <td><span class="star-cell" id="star5" data-value="5">★</span></td>
+        </tr>
+    </table>
     
     <button id="addBtn">Add Movie</button>
     
@@ -104,32 +137,66 @@
 
     <script>
         let currentRating = 0;
-        const stars = document.querySelectorAll('.star');
+        const star1 = document.getElementById('star1');
+        const star2 = document.getElementById('star2');
+        const star3 = document.getElementById('star3');
+        const star4 = document.getElementById('star4');
+        const star5 = document.getElementById('star5');
         
-        stars.forEach(star => {
-            star.addEventListener('click', function() 
-            {
-                currentRating = parseInt(this.dataset.value);
-                stars.forEach(s => {
-                    if (parseInt(s.dataset.value) <= currentRating) 
-                    {
-                        s.classList.add('selected');
-                    } else 
-                    {
-                        s.classList.remove('selected');
-                    }
-                });
-            });
+        function clearAllStars() {
+            star1.classList.remove('selected');
+            star2.classList.remove('selected');
+            star3.classList.remove('selected');
+            star4.classList.remove('selected');
+            star5.classList.remove('selected');
+        }
+        
+        star1.addEventListener('click', function() {
+            clearAllStars();
+            currentRating = 1;
+            star1.classList.add('selected');
         });
 
-        document.getElementById('addBtn').addEventListener('click', function() 
-        {
+        star2.addEventListener('click', function() {
+            clearAllStars();
+            currentRating = 2;
+            star1.classList.add('selected');
+            star2.classList.add('selected');
+        });
+
+        star3.addEventListener('click', function() {
+            clearAllStars();
+            currentRating = 3;
+            star1.classList.add('selected');
+            star2.classList.add('selected');
+            star3.classList.add('selected');
+        });
+
+        star4.addEventListener('click', function() {
+            clearAllStars();
+            currentRating = 4;
+            star1.classList.add('selected');
+            star2.classList.add('selected');
+            star3.classList.add('selected');
+            star4.classList.add('selected');
+        });
+
+        star5.addEventListener('click', function() {
+            clearAllStars();
+            currentRating = 5;
+            star1.classList.add('selected');
+            star2.classList.add('selected');
+            star3.classList.add('selected');
+            star4.classList.add('selected');
+            star5.classList.add('selected');
+        });
+
+        document.getElementById('addBtn').addEventListener('click', function() {
             const title = document.getElementById('title').value.trim();
             const year = document.getElementById('year').value.trim();
             const genre = document.getElementById('genre').value;
             
-            if (!title || !year || currentRating === 0) 
-            {
+            if (!title || !year || currentRating === 0) {
                 alert('Please fill all fields and select rating');
                 return;
             }
@@ -146,26 +213,36 @@
             document.getElementById('title').value = '';
             document.getElementById('year').value = '';
             document.getElementById('genre').selectedIndex = 0;
-            stars.forEach(s => s.classList.remove('selected'));
+            
+            clearAllStars();
             currentRating = 0;
             
             displayMovies();
         });
 
-        function displayMovies() 
-        {
+        function displayMovies() {
             const movies = JSON.parse(localStorage.getItem('movies')) || [];
             const list = document.getElementById('movieList');
             list.innerHTML = '';
             
-            movies.forEach(m => 
-            {
-                const starRating = '★'.repeat(parseInt(m.rating));
+            if (movies.length === 0) {
+                list.innerHTML = '<div class="movie-item">No movies added yet</div>';
+                return;
+            }
+            
+            movies.forEach(m => {
+                const rating = parseInt(m.rating);
+                let starRating = '';
+                for (let i = 0; i < rating; i++) {
+                    starRating += '★';
+                }
+                
                 list.innerHTML += `<div class="movie-item">
                     ${m.title} (${m.year}) - ${m.genre}, Rating: <span class="movie-stars">${starRating}</span>
                 </div>`;
             });
         }
+
         
         displayMovies();
     </script>
