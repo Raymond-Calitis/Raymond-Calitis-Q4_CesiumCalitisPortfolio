@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Q4 1st Graded Exercise">
+    <meta name="description" content="Q4 2nd Graded Exercise">
     <meta name="keywords" content="HTML Forms">
     <meta name="author" content="Raymond Ashly C. Calitis">
     <title>Movie Rating</title>
@@ -91,6 +91,9 @@
             border-radius: 5px;
             font-size: 16px;
             background-color: lightgrey;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .movie-stars 
         {
@@ -98,6 +101,15 @@
             font-size: 20px;
             letter-spacing: 2px;
             margin-left: 5px;
+        }
+        .delete-btn
+        {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -202,12 +214,29 @@
             }
             
             const movies = JSON.parse(localStorage.getItem('movies')) || [];
-            movies.push({
-                title: title,
-                year: year,
-                genre: genre,
-                rating: currentRating.toString()
-            });
+            
+            const existingIndex = movies.findIndex(m => m.title.toLowerCase() === title.toLowerCase());
+            
+            if (existingIndex !== -1) {
+                const existingRating = parseInt(movies[existingIndex].rating);
+                const newRating = currentRating;
+                const averagedRating = Math.round((existingRating + newRating) / 2);
+                
+                movies[existingIndex] = {
+                    title: title,
+                    year: year,
+                    genre: genre,
+                    rating: averagedRating.toString()
+                };
+            } else {
+                movies.push({
+                    title: title,
+                    year: year,
+                    genre: genre,
+                    rating: currentRating.toString()
+                });
+            }
+            
             localStorage.setItem('movies', JSON.stringify(movies));
             
             document.getElementById('title').value = '';
@@ -220,30 +249,37 @@
             displayMovies();
         });
 
+        function deleteMovie(index) {
+            if (confirm('Are you sure you want to delete?')) {
+                let movies = JSON.parse(localStorage.getItem('movies')) || [];
+                movies.splice(index, 1);
+                localStorage.setItem('movies', JSON.stringify(movies));
+                displayMovies();
+            }
+        }
+
         function displayMovies() {
             const movies = JSON.parse(localStorage.getItem('movies')) || [];
             const list = document.getElementById('movieList');
             list.innerHTML = '';
             
-            if (movies.length === 0) {
-                list.innerHTML = '<div class="movie-item">No movies added yet</div>';
-                return;
-            }
-            
-            movies.forEach(m => {
+            for (let i = 0; i < movies.length; i++) {
+                const m = movies[i];
                 const rating = parseInt(m.rating);
                 let starRating = '';
-                for (let i = 0; i < rating; i++) {
+                for (let j = 0; j < rating; j++) {
                     starRating += '★';
                 }
                 
-                list.innerHTML += `<div class="movie-item">
-                    ${m.title} (${m.year}) - ${m.genre}, Rating: <span class="movie-stars">${starRating}</span>
-                </div>`;
-            });
+                const movieDiv = document.createElement('div');
+                movieDiv.className = 'movie-item';
+                movieDiv.innerHTML = 
+                    '<div>' + m.title + ' (' + m.year + ') - ' + m.genre + ', Rating: <span class="movie-stars">' + starRating + '</span></div>' +
+                    '<button class="delete-btn" onclick="deleteMovie(' + i + ')">Delete</button>';
+                list.appendChild(movieDiv);
+            }
         }
 
-        
         displayMovies();
     </script>
 </body>
