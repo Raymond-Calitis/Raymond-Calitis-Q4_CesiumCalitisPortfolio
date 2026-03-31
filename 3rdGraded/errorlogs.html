@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="Raymond Ashly C. Calitis">
+  <meta name="description" content="testing and debugging">
+  <meta name="keywords" content="testing and debugging">
+  <title>CS3 - Error Logs</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+
+  <style>
+    tr:nth-child(1) ~ tr:nth-child(odd) {
+      background-color: lightgray;
+      color: black;
+    }
+    td, th {
+      padding: 10px;
+    }
+    table {
+      width: 90%;
+      margin: 0 auto;
+    }
+    caption {
+      font-size: 2em;
+      font-weight: bold;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <a href="index.html#start">Table</a>
+      <a href="index.html#input">Input</a>
+      <a href="index.html#output">Output</a>
+      <a href="errorlogs.html">Error Logs</a>
+    </nav>
+    
+    <h1 style="padding: 30px">CALITIS, Raymond Ashly C. / Cesium - Mar 31, 2026</h1>
+  </header>
+
+  <section id="table">
+    <table> 
+      <caption>Error Logs - 10 Errors Found</caption>
+      <tr class="rColor">
+        <th>#</th> 
+        <th>Where</th> 
+        <th>What was wrong?</th>
+        <th>How I fixed it</th>
+      </tr>
+      
+      <!-- CSS ERRORS -->
+      <tr>
+        <td>1</td> 
+        <td>style.css (nav links)</td> 
+        <td>Links were stacked on top of each other instead of side by side.</td>
+        <td>Changed <code>display:block</code> to <code>display:inline-block</code> so links sit on one line.</td>
+      </tr>
+      
+      <tr>
+        <td>2</td> 
+        <td>style.css (line 33)</td> 
+        <td>Had a space between 'a' and ':hover' so the hover effect didn't work.</td>
+        <td>Removed the space: changed <code>nav a :hover</code> to <code>nav a:hover</code>.</td>
+      </tr>
+      
+      <tr>
+        <td>3</td> 
+        <td>style.css (nav bar)</td> 
+        <td>The navigation bar scrolled down with the page instead of staying at the top.</td>
+        <td>Added <code>position: fixed; top: 0;</code> to keep the nav bar always at the top.</td>
+      </tr>
+      
+      <tr>
+        <td>4</td> 
+        <td>style.css (.point class)</td> 
+        <td>The red dots (points) didn't have <code>position:absolute</code> so they wouldn't move to the right spot.</td>
+        <td>Added <code>position: absolute;</code> to the .point class so I could place them anywhere.</td>
+      </tr>
+      
+      <tr>
+        <td>5</td> 
+        <td>style.css (table row colors)</td> 
+        <td>The selector <code>tr:nth-child(1) ~ tr:nth-child(odd)</code> was too complicated and didn't work well.</td>
+        <td>Changed to simpler <code>tr:nth-child(odd)</code> to color every other row.</td>
+      </tr>
+      
+      <!-- JAVASCRIPT ERRORS -->
+      <tr>
+        <td>6</td> 
+        <td>script.js (line 1)</td> 
+        <td>Function <code>plotPoint()</code> had no parameters but was given 4 numbers. It couldn't receive them.</td>
+        <td>Added parameters: <code>function plotPoint(x0, y0, x, y)</code> to accept the 4 numbers.</td>
+      </tr> 
+      
+      <tr>
+        <td>7</td> 
+        <td>script.js (line 2-3)</td> 
+        <td>Used <code>in1.innerHTML</code> and <code>out1.innerHTML</code> but didn't tell the code where to find 'in1' and 'out1'.</td>
+        <td>Changed to <code>document.getElementById('in1').innerHTML</code> so it knows exactly which element to update.</td>
+      </tr>
+      
+      <tr>
+        <td>8</td> 
+        <td>script.js (line 5-6)</td> 
+        <td>Wrote <code>point.styleleft</code> and <code>point.stylebottom</code> but CSS uses a dot: <code>style.left</code> and <code>style.bottom</code>.</td>
+        <td>Added the missing dots: changed to <code>point.style.left</code> and <code>point.style.bottom</code>.</td>
+      </tr>
+      
+      <tr>
+        <td>9</td> 
+        <td>script.js (line 8-20)</td> 
+        <td>Every time you clicked "Plot", it added a new red dot but kept the old ones. The screen got messy.</td>
+        <td>Added code to clear old dots first: <code>document.querySelectorAll('.point').forEach(p => p.remove());</code></td>
+      </tr>
+      
+      <tr>
+        <td>10</td> 
+        <td>script.js (line 10-20)</td> 
+        <td>The quadrant logic had a small mistake - didn't properly check when the point was exactly on the border line.</td>
+        <td>Added <code>if (x === x0 || y === y0)</code> first to check if point is on the border, then check quadrants.</td>
+      </tr>
+      
+    </table>
+    <hr>
+  </section>
+
+  <footer>
+    <a href="https://facebook.com"> 
+      <div class="icon facebook"></div>
+    </a>
+    <a href="https://twitter.com">
+      <div class="icon twitter"></div>
+    </a>
+    <a href="https://github.com">
+      <div class="icon github"></div>
+    </a>
+  </footer>
+</body>
+</html>
